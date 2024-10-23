@@ -1,3 +1,5 @@
+import 'tdesign-vue-next/es/style/index.css'
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
