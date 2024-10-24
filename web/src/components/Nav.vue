@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { iconUrl as iconUrlList } from '@/utils/logo'
+import router from '@/router'
 
 defineOptions({
   name: 'NavComponent',
@@ -17,7 +18,9 @@ const changeCollapsed = () => {
 }
 
 const changeHandler = (active: string) => {
-  console.log('change', active)
+  if (router.currentRoute.value.name != active) {
+    router.push({ name: active })
+  }
 }
 </script>
 
@@ -25,7 +28,7 @@ const changeHandler = (active: string) => {
   <div class="nav">
     <t-menu
       theme="light"
-      default-value="item2"
+      default-value="home"
       :collapsed="collapsed"
       @change="changeHandler"
     >
@@ -33,7 +36,7 @@ const changeHandler = (active: string) => {
         <img :width="collapsed ? 35 : 136" :src="iconUrl" alt="logo" />
       </template>
       <t-menu-group title="主导航">
-        <t-menu-item value="dashboard">
+        <t-menu-item value="home">
           <template #icon>
             <t-icon name="app" />
           </template>

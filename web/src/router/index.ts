@@ -8,6 +8,16 @@ const router = createRouter({
       path: '/',
       component: () => import('@/pages/Home/Home.vue'),
     },
+    {
+      name: 'file',
+      path: '/file',
+      component: () => import('@/pages/File/File.vue'),
+    },
+    {
+      name: 'chat',
+      path: '/chat',
+      component: () => import('@/pages/Chat/Chat.vue'),
+    },
   ],
 })
 
