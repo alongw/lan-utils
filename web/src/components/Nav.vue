@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { watch, ref } from 'vue'
 import { iconUrl as iconUrlList } from '@/utils/logo'
 import router from '@/router'
 
@@ -9,6 +9,7 @@ defineOptions({
 
 const collapsed = ref(false)
 const iconUrl = ref(iconUrlList.with_text)
+const currentMenu = ref<string | number>()
 
 const changeCollapsed = () => {
   collapsed.value = !collapsed.value
@@ -22,15 +23,19 @@ const changeHandler = (active: string) => {
     router.push({ name: active })
   }
 }
+
+watch(router.currentRoute, e => {
+  currentMenu.value = e.name?.toString() || ''
+})
 </script>
 
 <template>
   <div class="nav">
     <t-menu
       theme="light"
-      default-value="home"
       :collapsed="collapsed"
       @change="changeHandler"
+      v-model:value="currentMenu"
     >
       <template #logo>
         <img :width="collapsed ? 35 : 136" :src="iconUrl" alt="logo" />
@@ -58,6 +63,15 @@ const changeHandler = (active: string) => {
         </t-menu-item>
       </t-menu-group>
 
+      <t-submenu value="1" title="管理员功能">
+        <template #icon>
+          <t-icon name="code" />
+        </template>
+        <t-menu-item value="1-1" disabled>
+          <span>菜单二</span>
+        </t-menu-item>
+      </t-submenu>
+
       <template #operations>
         <t-button
           class="t-demo-collapse-btn"
@@ -72,4 +86,9 @@ const changeHandler = (active: string) => {
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.nav {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+}
+</style>
