@@ -1,3 +1,4 @@
+import '@/assets/style/base.less'
 import 'tdesign-vue-next/es/style/index.css'
 
 import { createApp } from 'vue'

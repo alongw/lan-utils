@@ -7,8 +7,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Nav: typeof import('./src/components/Nav.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TButton: typeof import('tdesign-vue-next')['Button']
+    TIcon: typeof import('tdesign-vue-next')['Icon']
+    TMenu: typeof import('tdesign-vue-next')['Menu']
+    TMenuGroup: typeof import('tdesign-vue-next')['MenuGroup']
+    TMenuItem: typeof import('tdesign-vue-next')['MenuItem']
+    TSubmenu: typeof import('tdesign-vue-next')['Submenu']
   }
 }
