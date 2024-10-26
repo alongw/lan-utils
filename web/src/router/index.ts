@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/chat',
       component: () => import('@/pages/Chat/Chat.vue'),
     },
+    {
+      name: 'login',
+      path: '/login',
+      component: () => import('@/pages/Login/Login.vue'),
+    },
   ],
 })
 

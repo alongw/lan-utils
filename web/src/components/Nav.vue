@@ -63,14 +63,23 @@ watch(router.currentRoute, e => {
         </t-menu-item>
       </t-menu-group>
 
-      <t-submenu value="1" title="管理员功能">
-        <template #icon>
-          <t-icon name="code" />
-        </template>
-        <t-menu-item value="1-1" disabled>
-          <span>菜单二</span>
+      <t-menu-group title="管理">
+        <t-menu-item value="login">
+          <template #icon>
+            <t-icon name="login" />
+          </template>
+          登录
         </t-menu-item>
-      </t-submenu>
+
+        <t-submenu value="1" title="管理员功能">
+          <template #icon>
+            <t-icon name="code" />
+          </template>
+          <t-menu-item value="1-1" disabled>
+            <span>菜单二</span>
+          </t-menu-item>
+        </t-submenu>
+      </t-menu-group>
 
       <template #operations>
         <t-button
