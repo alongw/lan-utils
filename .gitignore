@@ -7,5 +7,6 @@ logs
 # tempfile
 /temp
 
-sso.7z.backup
-sso.7z
+/service/public
+/service/share
+/service/upload

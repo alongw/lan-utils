@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import '@/utils/ws'
+
 defineOptions({
   name: 'ChatComponent',
 })
