@@ -1,16 +1,29 @@
 import { io } from 'socket.io-client'
+import { MessagePlugin } from 'tdesign-vue-next'
+import { ref } from 'vue'
 
 const URL = import.meta.env.VITE_BASE_URL || window.location.host
+
+const showConnectMsg = ref<boolean>(false)
 
 export const socket = io(URL)
 
 socket.on('connect', () => {
-  console.log('connected')
-  socket.emit('systemMsg', 'Lan-Utils-Client connected')
+  socket.emit('report', 'Lan-Utils-Client connected')
+
+  if (showConnectMsg.value) MessagePlugin.success('服务器连接成功')
 })
 
 socket.on('disconnect', () => {
-  console.log('disconnected')
+  showConnectMsg.value = true
+  MessagePlugin.error('与服务器断开连接，正在尝试重连...')
+  setTimeout(() => socket.connect(), 0)
+})
+
+socket.on('connect_error', () => {
+  showConnectMsg.value = true
+  MessagePlugin.error('连接服务器失败，正在尝试重连...')
+  setTimeout(() => socket.connect(), 0)
 })
 
 export default socket
