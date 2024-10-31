@@ -1,10 +1,9 @@
 import { io } from '@/utils/server'
-// import { getFileList } from '@/utils/file'
+import { getFileList } from '@/utils/file'
 
 import wsEventEmitter from '@/events/ws'
 
-io.on('connection', (socket) => {
-    console.log('a user connected')
+io.on('connection', async (socket) => {
     socket.on('chat', (socket) => {
         wsEventEmitter.emit('chat', socket)
         console.log(socket)
@@ -15,18 +14,29 @@ io.on('connection', (socket) => {
         console.log(socket)
     })
 
-    wsEventEmitter.on('sys', (e) => {
+    socket.emit('file', await getFileList())
+
+    const handleSysEvent = (e: unknown) => {
         socket.emit('sys', e)
         console.log(e)
-    })
-
-    wsEventEmitter.on('file', (e) => {
+    }
+    const handleFileEvent = (e: string[]) => {
         socket.emit('file', e)
-        console.log(e)
-    })
-
-    wsEventEmitter.on('msg', (e) => {
+    }
+    const handleMsgEvent = (e: unknown) => {
         socket.emit('msg', e)
         console.log(e)
+    }
+
+    wsEventEmitter.on('sys', handleSysEvent)
+
+    wsEventEmitter.on('file', handleFileEvent)
+
+    wsEventEmitter.on('msg', handleMsgEvent)
+
+    socket.on('disconnect', () => {
+        wsEventEmitter.off('sys', handleSysEvent)
+        wsEventEmitter.off('file', handleFileEvent)
+        wsEventEmitter.off('msg', handleMsgEvent)
     })
 })

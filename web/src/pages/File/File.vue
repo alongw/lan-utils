@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { EditIcon, DownloadIcon } from 'tdesign-icons-vue-next'
+
+import { useFileListStore } from '@/stores/fileList'
+
+// import { EditIcon, DownloadIcon } from 'tdesign-icons-vue-next'
 import { MessagePlugin } from 'tdesign-vue-next'
 import type { ListItemMetaProps, PaginationProps } from 'tdesign-vue-next'
+
 defineOptions({
   name: 'FilePage',
 })
+
+const fileListStore = useFileListStore()
 
 const avatarUrl: ListItemMetaProps['image'] =
   'https://tdesign.gtimg.com/site/avatar.jpg'
@@ -32,11 +38,23 @@ const onChange: PaginationProps['onChange'] = pageInfo => {
   <div class="file">
     <div class="nav">
       <h1>接收文件</h1>
+      {{ fileListStore.fileList }}
     </div>
 
     <div class="file-list">
       <t-list :split="true">
-        <t-list-item>
+        <t-list-item
+          v-for="item in fileListStore.fileList"
+          :key="item.fullName"
+        >
+          <t-list-item-meta
+            :image="avatarUrl"
+            :title="item.fullName"
+            :description="item.ext + ' 文件'"
+          />
+        </t-list-item>
+
+        <!-- <t-list-item>
           <t-list-item-meta
             :image="avatarUrl"
             title="列表主内容"
@@ -50,22 +68,7 @@ const onChange: PaginationProps['onChange'] = pageInfo => {
               <download-icon />
             </t-button>
           </template>
-        </t-list-item>
-        <t-list-item>
-          <t-list-item-meta
-            :image="avatarUrl"
-            title="列表主内容"
-            description="列表内容列表内容"
-          />
-          <template #action>
-            <t-button variant="text" shape="square">
-              <edit-icon />
-            </t-button>
-            <t-button variant="text" shape="square">
-              <download-icon />
-            </t-button>
-          </template>
-        </t-list-item>
+        </t-list-item> -->
       </t-list>
 
       <div class="pagination">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import '@/utils/ws'
+import { getStatusLight } from '@/utils/statusLight'
 
 defineOptions({
   name: 'ChatComponent',
@@ -8,8 +8,18 @@ defineOptions({
 
 <template>
   <div class="chat-component">
-    <t-card title="聊天室" hover-shadow>
-      11223344
+    <t-card hover-shadow>
+      <template #title>
+        <div class="title">
+          <h2>聊天室 &nbsp;</h2>
+          <div
+            class="status-light"
+            :style="{
+              backgroundColor: getStatusLight(),
+            }"
+          ></div>
+        </div>
+      </template>
       <template #actions>
         <t-tooltip content="发起新聊天">
           <t-button variant="text" shape="square">
@@ -22,8 +32,23 @@ defineOptions({
           </t-button>
         </t-tooltip>
       </template>
+
+      11223344
     </t-card>
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.title {
+  display: flex;
+  align-items: center;
+
+  .status-light {
+    width: 10px;
+    height: 10px;
+
+    background-color: gray;
+    border-radius: 50%;
+  }
+}
+</style>
