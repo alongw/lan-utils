@@ -13,6 +13,4 @@ socket.on('disconnect', () => {
   console.log('disconnected')
 })
 
-socket.on('testMsg', msg => {
-  console.log(msg)
-})
+export default socket
