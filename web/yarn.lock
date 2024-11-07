@@ -365,11 +365,6 @@
   resolved "https://registry.npmmirror.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
-"@tntx/file-icon@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmmirror.com/@tntx/file-icon/-/file-icon-1.0.1.tgz#d33e87a834278404e9dce6014082f4dab8afe817"
-  integrity sha512-f+HXS0p5WpEyR3kfDi3XteyF3fglYzAj823sT0ZSZnlPLfGzOijAnjVkXoMJePqmMglJ/aNwTeFhPpCjuNuuKQ==
-
 "@tsconfig/node20@^20.1.4":
   version "20.1.4"
   resolved "https://registry.npmmirror.com/@tsconfig/node20/-/node20-20.1.4.tgz#3457d42eddf12d3bde3976186ab0cd22b85df928"

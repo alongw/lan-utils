@@ -11,12 +11,21 @@ defineOptions({
     <div class="nav">
       <nav-component />
     </div>
-    <router-view />
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <style scoped lang="less">
 .app {
   display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  .content {
+    flex: 1;
+    overflow: auto;
+  }
 }
 </style>
