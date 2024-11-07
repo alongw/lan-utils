@@ -66,3 +66,9 @@ export const getIconUrl = (ext: string): string => {
   }
   return '/icons/file.png'
 }
+
+const URL = import.meta.env.VITE_BASE_URL || window.location.host
+
+export const getDownloadUrl = (fullName: string) => {
+  return `${URL}/share/${fullName}`
+}

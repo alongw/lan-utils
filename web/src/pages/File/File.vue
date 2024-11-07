@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useFileListStore } from '@/stores/fileList'
-import { getIconUrl } from '@/utils/file'
+import { getIconUrl, getDownloadUrl } from '@/utils/file'
 
 import type { PaginationProps } from 'tdesign-vue-next'
 
@@ -71,7 +71,14 @@ const onChange: PaginationProps['onChange'] = pageInfo => {
           </t-list-item-meta>
 
           <template #action>
-            <t-link theme="primary" hover="color" style="margin-left: 16px">
+            <t-link
+              theme="primary"
+              hover="color"
+              style="margin-left: 16px"
+              :href="getDownloadUrl(item.fullName)"
+              target="_blank"
+              name="download"
+            >
               下载
             </t-link>
           </template>
