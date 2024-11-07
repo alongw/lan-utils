@@ -34,6 +34,6 @@ socket.on('connect_error', () => {
   setTimeout(() => socket.connect(), 500)
 })
 
-import('./file')
+import('@/ws/import')
 
 export default socket

@@ -3,6 +3,8 @@ import { ref, computed, watch } from 'vue'
 import { useFileListStore } from '@/stores/fileList'
 import { getIconUrl, getDownloadUrl } from '@/utils/file'
 
+import StatusComponent from '@/components/Status.vue'
+
 import type { PaginationProps } from 'tdesign-vue-next'
 
 defineOptions({
@@ -46,11 +48,13 @@ const onChange: PaginationProps['onChange'] = pageInfo => {
   <div class="file">
     <div class="nav">
       <h1>接收文件</h1>
+      <status-component class="status" />
     </div>
 
     <div class="file-list">
       <t-list :split="true">
-        <t-list-item v-for="item in paginatedList" :key="item.fullName">
+        <t-empty v-if="paginatedList.length === 0" />
+        <t-list-item v-else v-for="item in paginatedList" :key="item.fullName">
           <t-list-item-meta
             :title="item.name"
             :description="item.ext + ' 文件'"
@@ -105,7 +109,12 @@ const onChange: PaginationProps['onChange'] = pageInfo => {
   height: 100%;
 
   .nav {
+    display: flex;
     padding: 20px;
+
+    .status {
+      margin-left: 15px;
+    }
   }
 
   .file-list {
