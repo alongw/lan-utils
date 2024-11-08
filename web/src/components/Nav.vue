@@ -76,7 +76,7 @@ watch(router.currentRoute, e => {
             <t-icon name="code" />
           </template>
           <t-menu-item value="1-1" disabled>
-            <span>菜单二</span>
+            <span>没做</span>
           </t-menu-item>
         </t-submenu>
       </t-menu-group>
