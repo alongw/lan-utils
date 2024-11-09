@@ -6,14 +6,16 @@ import wsEventEmitter from '@/events/ws'
 io.on('connection', async (socket) => {
     wsEventEmitter.emit('connection', socket)
 
-    socket.on('chat', (socket) => {
-        wsEventEmitter.emit('chat', socket)
-        console.log(socket)
+    socket.on('chat', (data) => {
+        wsEventEmitter.emit('chat', data)
+        console.log(data)
     })
 
-    socket.on('report', (socket) => {
-        wsEventEmitter.emit('report', socket)
-        console.log(socket)
+    socket.on('report', (data) => {
+        wsEventEmitter.emit('report', {
+            socket,
+            data
+        })
     })
 
     socket.emit('file', await getFileList())

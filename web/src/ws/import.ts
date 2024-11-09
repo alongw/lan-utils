@@ -1,4 +1,5 @@
 import('./file')
-import('../ws/system')
+import('./system')
+import('./message')
 
 export default undefined

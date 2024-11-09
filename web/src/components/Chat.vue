@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { sendMessage } from '@/ws/report'
+import { useMessageStore } from '@/stores/message'
 
 import StatusComponent from '@/components/Status.vue'
 
@@ -7,12 +9,37 @@ defineOptions({
   name: 'ChatComponent',
 })
 
+const messageStore = useMessageStore()
+
 const iptValue = ref('')
 const isComposing = ref(false)
+const isBtnDisabled = ref(false)
+const countdown = ref(0)
+let timer: ReturnType<typeof setTimeout> | null = null
+
+const freezeIpt = () => {
+  if (timer) clearTimeout(timer)
+  isBtnDisabled.value = true
+  countdown.value = 3
+
+  const tick = () => {
+    countdown.value--
+    if (countdown.value > 0) {
+      timer = setTimeout(tick, 1000)
+    } else {
+      isBtnDisabled.value = false
+      timer = null
+    }
+  }
+
+  timer = setTimeout(tick, 1000)
+}
 
 const handleSend = () => {
-  if (!iptValue.value) return
-  console.log('发送消息', iptValue.value)
+  if (!iptValue.value || isBtnDisabled.value) return
+  sendMessage(iptValue.value)
+  iptValue.value = ''
+  freezeIpt()
 }
 </script>
 
@@ -37,7 +64,19 @@ const handleSend = () => {
           </t-button>
         </t-tooltip>
       </template>
-      <template #footer>
+
+      <div class="card-content">
+        <div class="msg">
+          <t-space direction="vertical">
+            <t-notification
+              v-for="item in messageStore.messageList"
+              :key="item.time"
+              :icon="false"
+              :title="item.sender.name"
+              :content="item.text"
+            />
+          </t-space>
+        </div>
         <div class="input">
           <t-input
             v-model="iptValue"
@@ -46,18 +85,15 @@ const handleSend = () => {
             @enter="!isComposing && handleSend()"
             placeholder="请输入消息内容"
           />
-          <t-button @click="handleSend()" theme="default" variant="outline">
-            发送
+          <t-button
+            @click="handleSend()"
+            theme="default"
+            variant="outline"
+            :disabled="isBtnDisabled"
+          >
+            {{ isBtnDisabled ? `发送 (${countdown})` : '发送' }}
           </t-button>
         </div>
-      </template>
-
-      <div class="msg">
-        <t-notification
-          :icon="false"
-          title="127.0.0.1"
-          content="这是一条消息通知"
-        />
       </div>
     </t-card>
   </div>
@@ -72,8 +108,22 @@ const handleSend = () => {
     align-items: center;
   }
 
-  .input {
+  .card-content {
+    max-height: 70vh;
     display: flex;
+    flex-direction: column;
+
+    .msg {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 10px;
+      box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.1);
+    }
+
+    .input {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 </style>

@@ -3,6 +3,8 @@ import { MessagePlugin } from 'tdesign-vue-next'
 import { ref } from 'vue'
 import { useStatusStore } from '@/stores/ststus'
 
+import { connect } from '@/ws/report'
+
 const URL = import.meta.env.VITE_BASE_URL || window.location.host
 
 const showConnectMsg = ref<boolean>(false)
@@ -14,8 +16,7 @@ export const socket = io(URL, {
 })
 
 socket.on('connect', () => {
-  socket.emit('report', 'Lan-Utils-Client connected')
-
+  connect()
   if (showConnectMsg.value) MessagePlugin.success('已成功与服务器建立连接')
   statusStore.updateWsConnectStatus(true)
 })
