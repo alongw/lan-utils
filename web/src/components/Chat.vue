@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref, watch, nextTick } from 'vue'
 import { sendMessage } from '@/ws/report'
 import { useMessageStore } from '@/stores/message'
 
@@ -16,6 +16,8 @@ const isComposing = ref(false)
 const isBtnDisabled = ref(false)
 const countdown = ref(0)
 let timer: ReturnType<typeof setTimeout> | null = null
+
+const messageListRef = ref<HTMLElement | null>(null)
 
 const freezeIpt = () => {
   if (timer) clearTimeout(timer)
@@ -41,89 +43,127 @@ const handleSend = () => {
   iptValue.value = ''
   freezeIpt()
 }
+
+const scrollToBottom = (count?: number) => {
+  count = count || 0
+  nextTick(() => {
+    if (!messageListRef.value || messageStore.messageList.length === 0) {
+      if (count > 10) return
+      return setTimeout(() => scrollToBottom(count + 1), 100)
+    }
+    messageListRef.value.scrollTo({
+      top: messageListRef.value.scrollHeight,
+      behavior: 'smooth',
+    })
+  })
+}
+
+watch(
+  () => messageStore.messageList,
+  () => {
+    scrollToBottom()
+  },
+  { deep: true },
+)
+
+onMounted(() => {
+  setTimeout(scrollToBottom, 100)
+})
 </script>
 
 <template>
   <div class="chat-component">
-    <t-card hover-shadow style="height: 100%">
-      <template #title>
-        <div class="title">
-          <h2>聊天室 &nbsp;</h2>
-          <status-component />
-        </div>
-      </template>
-      <template #actions>
-        <t-tooltip content="发起新聊天">
-          <t-button variant="text" shape="square">
-            <t-icon name="add" />
-          </t-button>
-        </t-tooltip>
-        <t-tooltip content="清空历史记录">
-          <t-button variant="text" shape="square">
-            <t-icon name="delete" />
-          </t-button>
-        </t-tooltip>
-      </template>
-
-      <div class="card-content">
-        <div class="msg">
-          <t-space direction="vertical">
-            <t-notification
-              v-for="item in messageStore.messageList"
-              :key="item.time"
-              :icon="false"
-              :title="item.sender.name"
-              :content="item.text"
-            />
-          </t-space>
-        </div>
-        <div class="input">
-          <t-input
-            v-model="iptValue"
-            @compositionstart="isComposing = true"
-            @compositionend="isComposing = false"
-            @enter="!isComposing && handleSend()"
-            placeholder="请输入消息内容"
+    <div class="title">
+      <h2>聊天室 &nbsp;</h2>
+      <status-component />
+    </div>
+    <div class="content">
+      <div class="message-list" ref="messageListRef">
+        <t-space direction="vertical">
+          <t-notification
+            v-for="item in messageStore.messageList"
+            :key="item.time"
+            :icon="false"
+            :title="item.sender.name"
+            :content="item.text"
           />
-          <t-button
-            @click="handleSend()"
-            theme="default"
-            variant="outline"
-            :disabled="isBtnDisabled"
-          >
-            {{ isBtnDisabled ? `发送 (${countdown})` : '发送' }}
-          </t-button>
-        </div>
+        </t-space>
       </div>
-    </t-card>
+      <div class="input-group">
+        <t-input
+          v-model="iptValue"
+          @compositionstart="isComposing = true"
+          @compositionend="isComposing = false"
+          @enter="!isComposing && handleSend()"
+          placeholder="请输入消息内容"
+        />
+        <t-button
+          @click="handleSend()"
+          theme="default"
+          variant="outline"
+          :disabled="isBtnDisabled"
+        >
+          {{ isBtnDisabled ? `发送 (${countdown})` : '发送' }}
+        </t-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped lang="less">
 .chat-component {
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+
   height: 100%;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
 
   .title {
     display: flex;
-    align-items: center;
+    font-size: 16px;
+    margin: 10px 25px;
   }
 
-  .card-content {
-    max-height: 70vh;
+  .content {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 
-    .msg {
+    .message-list {
       flex: 1;
+      padding: 10px;
       overflow-y: auto;
-      padding-bottom: 10px;
-      box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.1);
     }
 
-    .input {
+    .input-group {
+      padding: 15px 0;
       display: flex;
       align-items: center;
     }
+  }
+
+  ::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+    padding: 0 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #aaaa !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aaa !important;
   }
 }
 </style>
