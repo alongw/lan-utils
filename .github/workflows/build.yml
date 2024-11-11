@@ -36,22 +36,40 @@ jobs:
                   yarn build
                   cd ..
 
-            - name: Generate final file
+            - name: Generate windows file
               run: |
-                  cp -r ./service/dist ./final/
-                  cp -r ./web/dist/* ./final/public/
-                  cd ./final
+                  cp -r ./service/dist ./windows/
+                  cp -r ./web/dist/* ./windows/public/
+                  cd ./windows
                   wget https://nodejs.org/dist/v20.17.0/win-x64/node.exe -O ./node.exe
                   echo "./node.exe ./app.js" > start.bat
                   iconv -f utf-8 -t gbk start.bat > start.bat.tmp
                   mv start.bat.tmp start.bat
                   cd ..
 
-            - name: Upload final artifact
+            - name: Upload windows artifact
               uses: actions/upload-artifact@v3
               with:
-                  name: final_artifact
-                  path: ./final
+                  name: windows_artifact
+                  path: ./windows
+
+            - name: Generate windows-full file
+              run: |
+                  cp -r ./windows ./windows-full
+                  cd ./windows-full
+                  yarn install --production
+                  cd ..
+
+            - name: Upload windows artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: windows_artifact
+                  path: ./windows
+
+            - name: Upload windows-full artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: windows-full_artifact
 
             - name: upload service
               uses: actions/upload-artifact@v3
