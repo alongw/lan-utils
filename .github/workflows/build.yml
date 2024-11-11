@@ -33,10 +33,9 @@ jobs:
               run: |
                   cd ./web
                   yarn
-                  echo 'VITE_HTTP_BASE_URL=https://api.liyxi.com/account' > .env.local
                   yarn build
                   cd ..
-                  cp ./web/dist ./service/dist/public/
+                  cp ./web/dist/* ./service/dist/public/
 
             - name: upload service
               uses: actions/upload-artifact@v3
