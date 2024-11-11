@@ -35,7 +35,23 @@ jobs:
                   yarn
                   yarn build
                   cd ..
-                  cp -r ./web/dist/* ./service/dist/public/
+
+            - name: Generate final file
+              run: |
+                  cp -r ./service/dist ./final/
+                  cp -r ./web/dist/* ./final/public/
+                  cd ./final
+                  wget https://nodejs.org/dist/v20.17.0/win-x64/node.exe -O ./node.exe
+                  echo "./node.exe ./app.js" > start.bat
+                  iconv -f utf-8 -t gbk start.bat > start.bat.tmp
+                  mv start.bat.tmp start.bat
+                  cd ..
+
+            - name: Upload final artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: final_artifact
+                  path: ./final
 
             - name: upload service
               uses: actions/upload-artifact@v3
