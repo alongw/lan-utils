@@ -47,18 +47,18 @@ jobs:
                   mv start.bat.tmp start.bat
                   cd ..
 
-            - name: Upload windows artifact
-              uses: actions/upload-artifact@v3
-              with:
-                  name: windows_artifact
-                  path: ./windows
-
             - name: Generate windows-full file
               run: |
                   cp -r ./windows ./windows-full
                   cd ./windows-full
                   yarn install --production
                   cd ..
+
+            - name: Upload windows artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: windows_artifact
+                  path: ./windows
 
             - name: Upload windows artifact
               uses: actions/upload-artifact@v3

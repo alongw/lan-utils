@@ -29,3 +29,14 @@ export const sendMessage = (msg: string) => {
     },
   })
 }
+
+export const updateUserInfo = (data: { name: string }) => {
+  report({
+    type: 'user_update_info',
+    data: {
+      ...data,
+      time: dayjs().valueOf(),
+      host: window.location.host,
+    },
+  })
+}
