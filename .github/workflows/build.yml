@@ -1,0 +1,51 @@
+name: Build
+
+on:
+    push:
+        branches:
+            - main
+
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
+
+            - name: build service
+              run: |
+                  cd ./service
+                  yarn
+                  yarn build
+                  cd ..
+
+            - name: build web
+              run: |
+                  cd ./web
+                  yarn
+                  echo 'VITE_HTTP_BASE_URL=https://api.liyxi.com/account' > .env.local
+                  yarn build
+                  cd ..
+                  cp ./web/dist ./service/dist/public/
+
+            - name: upload service
+              uses: actions/upload-artifact@v3
+              with:
+                  name: service
+                  path: ./service/dist
+
+            - name: upload web
+              uses: actions/upload-artifact@v3
+              with:
+                  name: web
+                  path: ./web/dist
