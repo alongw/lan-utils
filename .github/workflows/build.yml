@@ -35,7 +35,7 @@ jobs:
                   yarn
                   yarn build
                   cd ..
-                  cp ./web/dist/* ./service/dist/public/
+                  cp -r ./web/dist/* ./service/dist/public/
 
             - name: upload service
               uses: actions/upload-artifact@v3
