@@ -1,6 +1,8 @@
 node_modules
 config.yaml
 
+dist
+
 # Logs
 logs
 

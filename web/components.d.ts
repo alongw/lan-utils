@@ -13,9 +13,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Status: typeof import('./src/components/Status.vue')['default']
     TButton: typeof import('tdesign-vue-next')['Button']
-    TCard: typeof import('tdesign-vue-next')['Card']
     TEmpty: typeof import('tdesign-vue-next')['Empty']
-    THeadMenu: typeof import('tdesign-vue-next')['HeadMenu']
     TIcon: typeof import('tdesign-vue-next')['Icon']
     TImage: typeof import('tdesign-vue-next')['Image']
     TInput: typeof import('tdesign-vue-next')['Input']
@@ -30,6 +28,5 @@ declare module 'vue' {
     TPagination: typeof import('tdesign-vue-next')['Pagination']
     TSpace: typeof import('tdesign-vue-next')['Space']
     TSubmenu: typeof import('tdesign-vue-next')['Submenu']
-    TTooltip: typeof import('tdesign-vue-next')['Tooltip']
   }
 }

@@ -61,6 +61,10 @@ module.exports = {
                         json.type = 'commonjs'
                         return JSON.stringify(json, null, 2)
                     }
+                },
+                {
+                    from: './public',
+                    to: path.resolve(__dirname, 'dist/public')
                 }
             ]
         })
