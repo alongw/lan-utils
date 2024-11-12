@@ -60,16 +60,11 @@ jobs:
                   name: windows_artifact
                   path: ./windows
 
-            - name: Upload windows artifact
-              uses: actions/upload-artifact@v3
-              with:
-                  name: windows_artifact
-                  path: ./windows
-
             - name: Upload windows-full artifact
               uses: actions/upload-artifact@v3
               with:
                   name: windows-full_artifact
+                  path: ./windows-full
 
             - name: upload service
               uses: actions/upload-artifact@v3
