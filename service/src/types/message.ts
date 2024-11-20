@@ -2,6 +2,7 @@ export type MessageType = {
     sender: {
         name: string
         ip: string
+        uuid: string
     }
     time: string
     text: string
@@ -11,6 +12,7 @@ export type MessageType = {
 export type PublicMessageType = {
     sender: {
         name: string
+        uuid: string
     }
     time: string
     text: string

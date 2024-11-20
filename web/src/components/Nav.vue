@@ -81,6 +81,15 @@ watch(router.currentRoute, e => {
         </t-submenu>
       </t-menu-group>
 
+      <t-menu-group title="个人">
+        <t-menu-item value="info">
+          <template #icon>
+            <t-icon name="personal-information" />
+          </template>
+          资料设置
+        </t-menu-item>
+      </t-menu-group>
+
       <template #operations>
         <t-button
           class="t-demo-collapse-btn"
