@@ -1,18 +1,24 @@
 import messageTool from '@/utils/message'
 import dayjs from 'dayjs'
+import _ from 'lodash'
 
 import type { PublicMessageType } from '@/types/message'
 import type { Socket } from 'socket.io'
 
 import wsEventEmitter from '@/events/ws'
+import user from '@/utils/user'
 
 export const userSendMessage = (socket: Socket, data: { message: string }) => {
+    data.message = _.trim(data.message)
+    if (!data.message) return // 拒绝处理消息
     const userIp = socket.handshake.headers['x-real-ip'] || socket.handshake.address
+    const u = user.getUser(userIp.toString())
 
+    if (!u) return user.addUser(userIp.toString()) // 拒绝处理消息
     messageTool.addMessage({
         sender: {
             ip: userIp.toString(),
-            name: userIp.toString()
+            name: u.user_name || userIp.toString()
         },
         text: data.message,
         time: dayjs().format('YYYY-MM-DD HH:mm:ss'),

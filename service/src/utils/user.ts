@@ -49,6 +49,7 @@ export class User {
     #user_list: Set<UserInstance>
     constructor() {
         this.#user_list = new Set()
+        this.loadUser()
     }
 
     checkUserFile() {
