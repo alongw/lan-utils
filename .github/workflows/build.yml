@@ -42,7 +42,7 @@ jobs:
                   cp -r ./web/dist/* ./windows/public/
                   cd ./windows
                   wget https://nodejs.org/dist/v20.17.0/win-x64/node.exe -O ./node.exe
-                  echo "./node.exe ./app.js" > start.bat
+                  echo ".\node.exe .\app.js" > start.bat
                   iconv -f utf-8 -t gbk start.bat > start.bat.tmp
                   mv start.bat.tmp start.bat
                   cd ..
