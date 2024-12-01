@@ -9,7 +9,7 @@ const handleInput = async (value: string) => {
     value = _.trim(value)
     if (!value) return
 
-    const args = value.match(/(?:[^\s"]+|"[^"]*")+/g) || []
+    const args: string[] = value.match(/(?:[^\s"]+|"[^"]*")+/g) || []
     args.forEach((arg, index) => {
         if (arg.startsWith('"') && arg.endsWith('"')) {
             args[index] = arg.slice(1, arg.length - 1)
