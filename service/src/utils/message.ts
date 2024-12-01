@@ -8,7 +8,7 @@ export class Message {
 
     constructor(max: number) {
         this.#max = max
-        this.loadMessage()
+        // this.loadMessage() // 重启时暂时不加载
     }
 
     /**
