@@ -80,13 +80,27 @@ onMounted(() => {
     <div class="content">
       <div class="message-list" ref="messageListRef">
         <t-space direction="vertical">
-          <t-notification
+          <div
             v-for="item in messageStore.messageList"
             :key="item.time"
-            :icon="false"
-            :title="item.sender.name"
-            :content="item.text"
-          />
+            class="msg-item"
+          >
+            <div v-if="item.sender.uuid === 'System'" class="system">
+              <t-notification
+                :title="item.sender.name"
+                :content="item.text"
+                :theme="item.msgType || 'info'"
+              />
+            </div>
+
+            <div v-else class="normal-user">
+              <t-notification
+                :icon="false"
+                :title="item.sender.name"
+                :content="item.text"
+              />
+            </div>
+          </div>
         </t-space>
       </div>
       <div class="input-group">

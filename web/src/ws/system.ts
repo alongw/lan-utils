@@ -2,7 +2,14 @@ import { socket } from '@/utils/ws'
 import { useStatusStore } from '@/stores/ststus'
 import { useMessageStore } from '@/stores/message'
 import { useInfoStore } from '@/stores/info'
-import { globalExec, exec, showDialog, goTo, showMsg } from '@/utils/globalExec'
+import {
+  globalExec,
+  exec,
+  showDialog,
+  goTo,
+  showMsg,
+  reload,
+} from '@/utils/globalExec'
 
 const statusStore = useStatusStore()
 const messageStore = useMessageStore()
@@ -40,5 +47,9 @@ socket.on('sys', (data: { type: string; data: any }) => {
   if (data.type === 'updateUserInfo') {
     infoStore.updateUsername(data?.data?.name || '')
     infoStore.updateUuid(data?.data?.uuid || '')
+  }
+
+  if (data.type === 'reload') {
+    reload()
   }
 })

@@ -6,6 +6,7 @@ export type MessageType = {
     }
     time: string
     text: string
+    msgType: string
     type: string
 }
 
@@ -16,5 +17,6 @@ export type PublicMessageType = {
     }
     time: string
     text: string
+    msgType: string
     type: string
 }

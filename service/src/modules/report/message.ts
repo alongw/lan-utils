@@ -34,6 +34,7 @@ export const userSendMessage = (socket: Socket, data: { message: string }) => {
             uuid: u.user_uuid
         },
         text: data.message,
+        msgType: 'text',
         time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         type: 'user_send_message'
     })
@@ -44,6 +45,7 @@ export const userSendMessage = (socket: Socket, data: { message: string }) => {
             uuid: u.user_uuid
         },
         text: data.message,
+        msgType: 'text',
         time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         type: 'user_send_message'
     }
@@ -54,12 +56,17 @@ export const userSendMessage = (socket: Socket, data: { message: string }) => {
 export const userGetMessage = () => {
     const msgList = messageTool.getMessage(50)
     const publicMsgList: PublicMessageType[] = msgList.map((msg) => {
+        const senderName =
+            msg.sender.uuid === 'System'
+                ? 'System'
+                : `${msg.sender.name} (${msg.sender.ip})`
         return {
             sender: {
-                name: msg.sender.name,
+                name: senderName,
                 uuid: msg.sender.uuid
             },
             text: msg.text,
+            msgType: msg.msgType,
             time: msg.time,
             type: msg.type
         }

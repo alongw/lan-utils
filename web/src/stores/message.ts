@@ -4,9 +4,11 @@ import { defineStore } from 'pinia'
 export type PublicMessageType = {
   sender: {
     name: string
+    uuid: string
   }
   time: string
   text: string
+  msgType: string
   type: string
 }
 

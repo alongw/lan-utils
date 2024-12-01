@@ -53,4 +53,8 @@ export const exec = (command: string, data: any) => {
   exec(command, data)
 }
 
+export const reload = () => {
+  window.location.reload()
+}
+
 export default globalExec
