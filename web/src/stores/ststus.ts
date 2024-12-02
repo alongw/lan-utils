@@ -17,11 +17,20 @@ export const useStatusStore = defineStore('status', () => {
   const updateWsClientCount = (count: number) => {
     wsClientCount.value = count
   }
+
+  const pushMessagePermission = ref<boolean>()
+  const updatePushMessagePermission = (permission: boolean) => {
+    pushMessagePermission.value = permission
+  }
+
   return {
     wsConnectStatus,
     updateWsConnectStatus,
 
     wsClientCount,
     updateWsClientCount,
+
+    pushMessagePermission,
+    updatePushMessagePermission,
   }
 })

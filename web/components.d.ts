@@ -12,6 +12,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Status: typeof import('./src/components/Status.vue')['default']
+    TAlert: typeof import('tdesign-vue-next')['Alert']
     TButton: typeof import('tdesign-vue-next')['Button']
     TCheckbox: typeof import('tdesign-vue-next')['Checkbox']
     TCheckboxGroup: typeof import('tdesign-vue-next')['CheckboxGroup']

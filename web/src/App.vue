@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import NavComponent from '@/components/Nav.vue'
 
+import Push from 'push.js'
+import { onMounted } from 'vue'
+
 defineOptions({
   name: 'AppComponent',
+})
+
+onMounted(() => {
+  Push.Permission.request()
 })
 </script>
 
