@@ -8,7 +8,7 @@ export class Message {
 
     constructor(max: number) {
         this.#max = max
-        // this.loadMessage() // 重启时暂时不加载
+        this.loadMessage(false)
     }
 
     /**
@@ -42,11 +42,17 @@ export class Message {
     /**
      * Load the message from the file
      */
-    loadMessage() {
+    loadMessage(importMsg: boolean = true) {
         if (!fse.existsSync('./data/message.json')) {
             fse.writeJsonSync('./data/message.json', [])
         }
-        this.#message = new Set(fse.readJsonSync('./data/message.json').slice(-this.#max))
+        if (importMsg) {
+            this.#message = new Set(
+                fse.readJsonSync('./data/message.json').slice(-this.#max)
+            )
+        } else {
+            this.#message = new Set()
+        }
     }
 
     /**

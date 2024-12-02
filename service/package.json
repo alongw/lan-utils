@@ -25,6 +25,7 @@
         "@types/fs-extra": "^11.0.4",
         "@types/lodash": "^4.14.202",
         "@types/node": "^20.4.0",
+        "@types/validator": "^13.12.2",
         "@typescript-eslint/eslint-plugin": "^6.13.1",
         "@typescript-eslint/parser": "^6.13.1",
         "clean-webpack-plugin": "^4.0.0",
@@ -53,6 +54,7 @@
         "log4js": "^6.9.1",
         "socket.io": "^4.8.1",
         "uuid": "^11.0.3",
+        "validator": "^13.12.0",
         "yaml": "^2.6.0"
     }
 }

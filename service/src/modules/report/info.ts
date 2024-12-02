@@ -2,10 +2,18 @@ import type { Socket } from 'socket.io'
 import user from '@/utils/user'
 
 import _ from 'lodash'
+import validator from 'validator'
+
+const checkName = (name: string) => {
+    return (
+        validator.isLength(name, { min: 3, max: 13 }) &&
+        /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(name)
+    )
+}
 
 export const userUpdateInfo = (socket: Socket, data: { name: string }) => {
     data.name = _.trim(data.name)
-    if (!data?.name)
+    if (!checkName(data?.name))
         return socket.emit('sys', {
             type: 'showDialog',
             data: {

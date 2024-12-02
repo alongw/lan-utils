@@ -14,8 +14,9 @@ export const useInfoHook = () => {
       },
       {
         min: 3,
-        max: 10,
-        message: '昵称长度需控制在 3 到 10 个字符',
+        max: 13,
+        message:
+          '昵称长度需控制在 3 到 13 个字符，仅可包含中文、英文、数字和下划线',
       },
     ],
   }
