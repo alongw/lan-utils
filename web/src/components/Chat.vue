@@ -2,7 +2,7 @@
 import { onMounted, ref, watch, nextTick } from 'vue'
 import { sendMessage } from '@/ws/report'
 import { useMessageStore } from '@/stores/message'
-import { useStatusStore } from '@/stores/ststus'
+// import { useStatusStore } from '@/stores/ststus'
 
 import StatusComponent from '@/components/Status.vue'
 
@@ -11,7 +11,7 @@ defineOptions({
 })
 
 const messageStore = useMessageStore()
-const statusStore = useStatusStore()
+// const statusStore = useStatusStore()
 
 const iptValue = ref('')
 const isComposing = ref(false)
@@ -106,7 +106,7 @@ onMounted(() => {
         </t-space>
       </div>
       <div class="input-group">
-        <t-input
+        <!-- <t-input
           v-model="iptValue"
           @compositionstart="isComposing = true"
           @compositionend="isComposing = false"
@@ -117,6 +117,13 @@ onMounted(() => {
               : '请输入消息内容'
           "
           :disabled="!statusStore.pushMessagePermission"
+        /> -->
+        <t-input
+          v-model="iptValue"
+          @compositionstart="isComposing = true"
+          @compositionend="isComposing = false"
+          @enter="!isComposing && handleSend()"
+          placeholder="请输入消息内容"
         />
         <t-button
           @click="handleSend()"

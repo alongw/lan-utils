@@ -3,7 +3,7 @@ import ChatComponent from '@/components/Chat.vue'
 import { MessagePlugin } from 'tdesign-vue-next'
 import { onMounted } from 'vue'
 import { useInfoStore } from '@/stores/info'
-import { useStatusStore } from '@/stores/ststus'
+// import { useStatusStore } from '@/stores/ststus'
 import router from '@/router'
 
 import { getPermission } from '@/utils/push'
@@ -13,11 +13,11 @@ defineOptions({
 })
 
 const infoStore = useInfoStore()
-const statusStore = useStatusStore()
+// const statusStore = useStatusStore()
 
 onMounted(() => {
   if (!infoStore.uuid || !infoStore.username) {
-    MessagePlugin.error('基于保安理由，补充资料后才能进行该操作')
+    MessagePlugin.error('基于保安理由，阁下需进行补充资料后才能执行该操作')
     setTimeout(() => {
       router.push('/info')
     }, 100)
@@ -30,7 +30,7 @@ onMounted(() => {
 <template>
   <div class="chat">
     <chat-component />
-    <div v-if="!statusStore.pushMessagePermission" class="tips">
+    <!-- <div v-if="!statusStore.pushMessagePermission" class="tips">
       <t-alert theme="error">
         <p>你必须将接收消息权限设置为允许才能继续使用聊天功能。</p>
         <p>在浏览器左上角选择允许，然后点击重试按钮。</p>
@@ -41,7 +41,7 @@ onMounted(() => {
           <span @click="getPermission(true)">重试</span>
         </template>
       </t-alert>
-    </div>
+    </div> -->
   </div>
 </template>
 
