@@ -14,8 +14,6 @@ declare module 'vue' {
     Status: typeof import('./src/components/Status.vue')['default']
     TAlert: typeof import('tdesign-vue-next')['Alert']
     TButton: typeof import('tdesign-vue-next')['Button']
-    TCheckbox: typeof import('tdesign-vue-next')['Checkbox']
-    TCheckboxGroup: typeof import('tdesign-vue-next')['CheckboxGroup']
     TEmpty: typeof import('tdesign-vue-next')['Empty']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
